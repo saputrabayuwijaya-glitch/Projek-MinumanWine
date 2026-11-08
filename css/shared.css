@@ -1,0 +1,610 @@
+/* =============================================
+   BBR Wine System - Unified Design System
+   Berry Bros & Rudd | Sistem Penjualan Wine
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap');
+
+:root {
+  --sidebar-bg: #0f0f0f;
+  --sidebar-width: 260px;
+  --primary-wine: #6b0f1a;
+  --primary-wine-light: #8d1624;
+  --accent-gold: #d4af37;
+  --accent-gold-dim: rgba(212, 175, 55, 0.15);
+  --content-bg: #f4f6f9;
+  --card-bg: #ffffff;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+  --card-radius: 16px;
+  --text-dark: #1a1a2e;
+  --text-muted: #6c757d;
+  --border-light: rgba(0, 0, 0, 0.06);
+  --danger: #dc3545;
+  --success: #198754;
+}
+
+/* ---- RESET & BASE ---- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--content-bg);
+  color: var(--text-dark);
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* =============================================
+   SIDEBAR
+   ============================================= */
+#sidebar {
+  width: var(--sidebar-width);
+  min-height: 100vh;
+  background: var(--sidebar-bg);
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.04);
+  transition: all 0.3s ease;
+}
+
+.sidebar-inner {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Logo */
+.sidebar-logo-wrap {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.sidebar-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  letter-spacing: 3px;
+  text-decoration: none;
+  display: block;
+  line-height: 1;
+}
+
+.sidebar-tagline {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.3);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.sidebar-wine-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+  background-size: cover;
+  background-position: center;
+  margin: 0 auto 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  border: 2px solid rgba(212,175,55,0.3);
+}
+
+/* Nav Menu */
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
+
+.sidebar-nav li {
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  color: rgba(255,255,255,0.55);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.menu-link i {
+  font-size: 1.1rem;
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.menu-link:hover {
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--accent-gold);
+  text-decoration: none;
+  transform: translateX(3px);
+}
+
+.sidebar-nav li.active .menu-link {
+  background: linear-gradient(135deg, var(--primary-wine), var(--primary-wine-light));
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(107, 15, 26, 0.4);
+}
+
+.sidebar-nav li.active .menu-link i {
+  color: var(--accent-gold);
+}
+
+.menu-link.logout {
+  color: rgba(220, 53, 69, 0.7) !important;
+  margin-top: 8px;
+}
+
+.menu-link.logout:hover {
+  background: rgba(220, 53, 69, 0.12);
+  color: #dc3545 !important;
+}
+
+.sidebar-footer {
+  font-size: 0.65rem;
+  color: rgba(255,255,255,0.15);
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.04);
+  margin-top: 1rem;
+}
+
+/* =============================================
+   MAIN CONTENT WRAPPER
+   ============================================= */
+#content {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  padding: 2rem 2.5rem;
+  transition: all 0.3s ease;
+}
+
+/* =============================================
+   PAGE HEADER AREA
+   ============================================= */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.8rem;
+}
+
+.page-header-left .page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0 0 4px;
+}
+
+.page-header-left .page-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* =============================================
+   BREADCRUMB BADGE
+   ============================================= */
+.section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-gold-dim);
+  color: #b8962e;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 20px;
+  margin-bottom: 0.5rem;
+}
+
+/* =============================================
+   CARDS
+   ============================================= */
+.card-custom {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-light);
+  padding: 1.5rem;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card-custom:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Table card */
+.table-card {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-light);
+  padding: 1.5rem;
+  overflow: hidden;
+}
+
+/* Form card */
+.form-card {
+  background: var(--card-bg);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-light);
+  padding: 2.5rem;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.form-card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.form-card-header .header-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--primary-wine), var(--primary-wine-light));
+  color: white;
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  box-shadow: 0 6px 20px rgba(107, 15, 26, 0.3);
+}
+
+.form-card-header h4 {
+  font-weight: 700;
+  color: var(--text-dark);
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.form-card-header p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+
+/* =============================================
+   TABLES
+   ============================================= */
+.table-responsive {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+table.dataTable,
+.table {
+  width: 100% !important;
+  font-size: 0.88rem;
+}
+
+table.dataTable thead th,
+.table thead th {
+  background: linear-gradient(135deg, var(--primary-wine), var(--primary-wine-light));
+  color: white !important;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border: none !important;
+  padding: 13px 14px;
+}
+
+table.dataTable tbody tr,
+.table tbody tr {
+  border-bottom: 1px solid var(--border-light);
+  transition: background 0.2s;
+}
+
+table.dataTable tbody tr:hover,
+.table tbody tr:hover {
+  background-color: rgba(212, 175, 55, 0.05) !important;
+}
+
+table.dataTable tbody td,
+.table tbody td {
+  padding: 12px 14px;
+  vertical-align: middle;
+  border: none;
+  color: #333;
+}
+
+/* =============================================
+   BUTTONS
+   ============================================= */
+.btn-wine {
+  background: linear-gradient(135deg, var(--primary-wine), var(--primary-wine-light));
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 9px 22px;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-wine:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(107, 15, 26, 0.35);
+  color: white;
+  text-decoration: none;
+}
+
+.btn-add {
+  background: linear-gradient(135deg, var(--accent-gold), #c9a227);
+  color: #1a1a1a;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 9px 22px;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-add:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.35);
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.btn-action {
+  border: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 8px;
+  margin: 2px;
+  transition: all 0.25s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-action:hover {
+  transform: translateY(-1px);
+  text-decoration: none;
+}
+
+.btn-edit {
+  background: rgba(25, 135, 84, 0.12);
+  color: var(--success);
+}
+
+.btn-edit:hover {
+  background: var(--success);
+  color: white;
+}
+
+.btn-delete {
+  background: rgba(220, 53, 69, 0.1);
+  color: var(--danger);
+}
+
+.btn-delete:hover {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-detail-act {
+  background: rgba(108, 117, 125, 0.1);
+  color: #495057;
+}
+
+.btn-detail-act:hover {
+  background: #6c757d;
+  color: white;
+}
+
+.btn-print {
+  background: rgba(212, 175, 55, 0.12);
+  color: #b8962e;
+}
+
+.btn-print:hover {
+  background: var(--accent-gold);
+  color: #1a1a1a;
+}
+
+/* Form elements */
+.form-label {
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: #555;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.input-group-text {
+  background: linear-gradient(135deg, var(--primary-wine), var(--primary-wine-light));
+  color: white;
+  border: none;
+  border-radius: 10px 0 0 10px;
+}
+
+.form-control {
+  border: 1px solid #e0e0e0;
+  border-radius: 0 10px 10px 0;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  color: var(--text-dark);
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+
+.form-control:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+  outline: none;
+}
+
+.form-control[readonly] {
+  background: #f5f5f5;
+  color: #888;
+}
+
+/* =============================================
+   TOP NAVBAR (mobile toggle)
+   ============================================= */
+.topbar-inner {
+  background: white;
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--card-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-sidebar-toggle {
+  background: var(--accent-gold-dim);
+  color: #b8962e;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  display: none;
+}
+
+/* =============================================
+   DATATABLES OVERRIDE
+   ============================================= */
+.dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  color: var(--text-dark);
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+  border-color: var(--accent-gold);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(212,175,55,0.12);
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+  background: linear-gradient(135deg, var(--primary-wine), var(--primary-wine-light)) !important;
+  color: white !important;
+  border: none !important;
+  border-radius: 6px;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background: var(--accent-gold-dim) !important;
+  color: #b8962e !important;
+  border: none !important;
+  border-radius: 6px;
+}
+
+/* =============================================
+   ALERT & NOTICE
+   ============================================= */
+.alert-wine {
+  background: rgba(107,15,26,0.08);
+  border: 1px solid rgba(107,15,26,0.15);
+  color: var(--primary-wine);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 0.85rem;
+}
+
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+@media (max-width: 992px) {
+  #sidebar {
+    left: -260px;
+  }
+
+  #sidebar.open {
+    left: 0;
+    box-shadow: 10px 0 40px rgba(0,0,0,0.3);
+  }
+
+  #content {
+    margin-left: 0;
+    padding: 1.2rem;
+  }
+
+  .btn-sidebar-toggle {
+    display: block;
+  }
+}
+
+/* SELECT in input-group */
+.input-group select.form-control {
+  border-radius: 0 10px 10px 0;
+  border: 1px solid #e0e0e0;
+  border-left: none;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  color: #1a1a2e;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.input-group select.form-control:focus {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.15);
+  outline: none;
+}
+
+/* Standalone select */
+select.form-control {
+  cursor: pointer;
+}
+
+/* Fix wrapper for Home.php main-content that uses different ID */
+#main-content {
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  transition: all 0.3s ease;
+}
+
+/* Align Home.php sidebar classes with shared.css */
+.sidebar-inner {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
